@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package dslVersion="1.0.0.0" 
+        Id="7b87f167-4593-4bba-b38b-dd3a1efec91f" 
+        solutionId="7b87f167-4593-4bba-b38b-dd3a1efec91f" 
+        xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel" 
+        name="Workflow.IntegratedWorkflowApp.SettingsReader"
+        sharePointProductVersion="16.0">
+  <features>
+        <featureReference itemId="66d69f9c-ad45-42d0-99f1-309b33aafde9" />
+  </features>
+</package>
