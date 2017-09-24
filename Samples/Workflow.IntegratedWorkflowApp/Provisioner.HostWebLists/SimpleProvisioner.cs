@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Workflow;
 
 namespace Provisioner.HostWebLists
 {
@@ -65,64 +65,16 @@ namespace Provisioner.HostWebLists
 
             var customerList = _web.GetListByTitle("Customer");
 
+            string appWebLeafName = "";
+            string appWebHistoryListName = "";
+            string appWebTasksListName = "";
+            string appWebIntegratedWorkflowName = "";
+            string listWorkflowAssociationName = "";
+            string coolStatusFieldName = "";
+
+            customerList.AssociateIntegratedWorkflow(appWebLeafName,appWebHistoryListName,appWebTasksListName,appWebIntegratedWorkflowName,listWorkflowAssociationName,false,true,true,coolStatusFieldName);
 
 
-
-
-        }
-    }
-
-
-    public static class ListExtensions
-    {
-        public static void AssociateIntegratedWorkflow(this List currentList, string appWebLeafUrl, string historyListName, string taskListName, string workflowDefinitionName)
-        {
-            //  fetch app-web by 'App name'
-
-            var hostWeb = currentList.ParentWeb;
-            var context = hostWeb.Context;
-
-            //  validate App-Web exists by leafname
-
-            if(string.IsNullOrEmpty(appWebLeafUrl))
-                throw new ArgumentNullException(appWebLeafUrl,"Please provide appweb leaf url.");
-            if(!hostWeb.WebExists(appWebLeafUrl))
-                throw new ArgumentNullException(appWebLeafUrl,"Invalid app-web leaf url provided. Hint: provide Add-In Name from AppMainfest.xml");
-
-
-            
-            var appWeb = hostWeb.GetWeb(appWebLeafUrl);
-            
-            List historyList, tasksList;
-
-            if (!appWeb.ListExists(historyListName))
-            {
-                historyList = appWeb.CreateList(ListTemplateType.WorkflowHistory, historyListName, false);
-                context.ExecuteQueryRetry();
-            }
-            else
-            {
-                historyList = appWeb.GetListByTitle(historyListName);
-            }
-
-            if (!appWeb.ListExists(taskListName))
-            {
-                tasksList = appWeb.CreateList(ListTemplateType.Tasks, taskListName, false);
-                context.ExecuteQueryRetry();
-            }
-            else
-            {
-                tasksList = appWeb.GetListByTitle(taskListName);
-            }
-
-            //  validate if workflow definition exists
-            var publishedDefinitions = appWeb.GetWorkflowDefinitions(true);
-
-            if(publishedDefinitions.Any(p=> string.Compare(p.DisplayName,workflowDefinitionName,StringComparison.InvariantCultureIgnoreCase) != 0))
-                throw new ArgumentException("Invalid workflow definition name.",workflowDefinitionName);
-            
-
-            var wfDefinition = appWeb.GetWorkflowDefinition(workflowDefinitionName);
 
 
         }
