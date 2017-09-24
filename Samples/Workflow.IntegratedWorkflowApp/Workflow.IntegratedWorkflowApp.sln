@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workflow.IntegratedWorkflowApp.SettingsReader", "Workflow.IntegratedWorkflowApp.SettingsReader\Workflow.IntegratedWorkflowApp.SettingsReader.csproj", "{1C2642FA-85FA-4A27-85DB-27B830D3D9F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workflow.IntegratedWorkflowApp", "Workflow.IntegratedWorkflowApp.SettingsReader\Workflow.IntegratedWorkflowApp.csproj", "{1C2642FA-85FA-4A27-85DB-27B830D3D9F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Provisioner.HostWebLists", "Provisioner.HostWebLists\Provisioner.HostWebLists.csproj", "{BADDF2EE-30E4-489F-875E-A143BEF9C90C}"
 EndProject

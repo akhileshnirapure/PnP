@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Workflow;
 
@@ -9,8 +10,7 @@ namespace Provisioner.HostWebLists
         private readonly ClientContext _context;
         private Web _web;
 
-        readonly Guid ConfigurationValueFieldId = new Guid();
-        string CONFIGURATION_VALUE_FIELD = @"";
+        string CONFIGURATION_VALUE_FIELD = @"<Field Type='Text' DisplayName='ConfigurationValue' Required='FALSE' MaxLength='255' ID='{870192fd-663b-4ea3-a972-efea5d2ea5b8}' StaticName='ConfigurationValue' Name='ConfigurationValue' />";
         private List _settingsList;
 
         public SimpleProvisioner(ClientContext context)
@@ -26,10 +26,10 @@ namespace Provisioner.HostWebLists
             //  create Customer list
             if (!_web.ListExists("Customer"))
                 _web.CreateList(ListTemplateType.GenericList, "Customer", false, true, "Lists/Customer", false);
-                                         
+
             //  create settings list
-            _settingsList = _web.CreateList(ListTemplateType.GenericList, "Settings", false, true, "Lists/Settings", false);
-            _context.ExecuteQueryRetry();
+            if (!_web.ListExists("Settings"))
+                _settingsList = _web.CreateList(ListTemplateType.GenericList, "Settings", false, true, "Lists/Settings", false);
 
             //  ensure ConfigruationValue field
             if (!_settingsList.FieldExistsByName("ConfigurationValue"))
@@ -63,16 +63,23 @@ namespace Provisioner.HostWebLists
 
             //  Take reference of target list to which the workflow needs to be associated
 
+            var settingsList = _web.GetListByTitle("Settings");
+
             var customerList = _web.GetListByTitle("Customer");
 
-            string appWebLeafName = "";
-            string appWebHistoryListName = "";
-            string appWebTasksListName = "";
-            string appWebIntegratedWorkflowName = "";
-            string listWorkflowAssociationName = "";
-            string coolStatusFieldName = "";
+            string appWebLeafName = "Configurations";           //  leaf name of Add-In
+            string appWebHistoryListName = "CustomerHistory";   //  history List name
+            string appWebTasksListName = "CustomerTasks";       //  tasks list name
+            string appWebIntegratedWorkflowName = "Greeter";    //  Workflow Name
+            string listWorkflowAssociationName = "Awesome Greeting";    //  List & Workflow Association Name
+            string coolStatusFieldName = "Greeting";            //  Status Column name
 
-            customerList.AssociateIntegratedWorkflow(appWebLeafName,appWebHistoryListName,appWebTasksListName,appWebIntegratedWorkflowName,listWorkflowAssociationName,false,true,true,coolStatusFieldName);
+            var additionalConfigurations = new Dictionary<string, string>
+            {
+                {"Config_SettingsListId", settingsList.Id.ToString()}
+            };
+
+            customerList.AssociateIntegratedWorkflow(appWebLeafName,appWebHistoryListName,appWebTasksListName,appWebIntegratedWorkflowName,listWorkflowAssociationName,false,true,true,coolStatusFieldName,additionalConfigurations);
 
 
 

@@ -22,6 +22,7 @@
     <WorkflowPartId>{7df74c17-3c3b-4bf5-8f96-cc442ff7738a}</WorkflowPartId>
     <CspkgPartId>{cc37f718-9eb8-4472-aa21-908e3b9f76be}</CspkgPartId>
     <SqlPackagePartId>{40c1b524-25ce-4958-8540-fc50abfaa6f3}</SqlPackagePartId>
+    <IsIntegratedWorkflowApp>true</IsIntegratedWorkflowApp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,6 +44,9 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="Workflow\Greeter\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{769fe01b-732b-4659-b1a2-05ff6961b81f}</SharePointProjectItemId>
+    </None>
     <None Include="packages.config" />
     <None Include="Pages\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{952407d9-13af-497f-815f-41098df5ed18}</SharePointProjectItemId>
@@ -85,17 +89,36 @@
     <None Include="Package\Package.Template.xml">
       <DependentUpon>Package.package</DependentUpon>
     </None>
-    <None Include="Features\Feature1\Feature1.feature">
+    <None Include="Features\Core\Core.feature">
       <FeatureId>{66d69f9c-ad45-42d0-99f1-309b33aafde9}</FeatureId>
     </None>
-    <None Include="Features\Feature1\Feature1.Template.xml">
-      <DependentUpon>Feature1.feature</DependentUpon>
+    <None Include="Features\Core\Core.Template.xml">
+      <DependentUpon>Core.feature</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
     <AppManifestFile Include="AppManifest.xml">
       <SubType>Designer</SubType>
     </AppManifestFile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Activities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SharePoint.DesignTime.Activities.16.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Activities" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.Activities" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamlAppDef Include="Workflow\Greeter\Workflow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </XamlAppDef>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

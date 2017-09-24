@@ -24,6 +24,8 @@ namespace Provisioner.HostWebLists
             var userName = ConfigurationManager.AppSettings["USER_NAME"];
             var password = ConfigurationManager.AppSettings["PASSWORD"];
 
+
+
             if (Validate(targetSiteUrl, userName, password) == false)
                 throw new Exception("Ensure valid SiteUrl,Username and Password is provided.");
 
@@ -37,7 +39,7 @@ namespace Provisioner.HostWebLists
 
             provisioner.Create_Artefacts();
             provisioner.Add_Default_Setting_ListItem();
-            provisioner.Associate_Integrated_Workflow_To_Customer_List();
+            //provisioner.Associate_Integrated_Workflow_To_Customer_List();
 
 
         }
