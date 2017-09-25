@@ -51,7 +51,7 @@ namespace Provisioner.HostWebLists
         public void Associate_Integrated_Workflow_To_Customer_List()
         {
            
-            /*  Facts
+            /*  Notes
              *  
              *  1.  In Integrated Workflow App, the Workflow definition is published in App Web.
              *  2.  Tasks and History List needs to be in App Web.
@@ -74,12 +74,22 @@ namespace Provisioner.HostWebLists
             string listWorkflowAssociationName = "Awesome Greeting";    //  List & Workflow Association Name
             string coolStatusFieldName = "Greeting";            //  Status Column name
 
+
+            //  Demonstrating how custom information can be passed and later can be consumed in workflow using GetConfigurationValue activity
+
             var additionalConfigurations = new Dictionary<string, string>
             {
                 {"Config_SettingsListId", settingsList.Id.ToString()}
             };
 
-            customerList.AssociateIntegratedWorkflow(appWebLeafName,appWebHistoryListName,appWebTasksListName,appWebIntegratedWorkflowName,listWorkflowAssociationName,false,true,true,coolStatusFieldName,additionalConfigurations);
+            customerList.AssociateIntegratedWorkflow(appWebLeafName: appWebLeafName,
+                                                        historyListName: appWebHistoryListName,
+                                                        taskListName: appWebTasksListName,
+                                                        workflowDefinitionName: appWebIntegratedWorkflowName,
+                                                        subscriptionName: listWorkflowAssociationName,
+                                                        startManually: false,startOnCreate: true,startOnChange: true,
+                                                        statusFieldName: coolStatusFieldName,
+                                                        associationValues: additionalConfigurations);
 
 
 

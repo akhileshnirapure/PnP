@@ -39,7 +39,7 @@ namespace Provisioner.HostWebLists
 
             provisioner.Create_Artefacts();
             provisioner.Add_Default_Setting_ListItem();
-            //provisioner.Associate_Integrated_Workflow_To_Customer_List();
+            provisioner.Associate_Integrated_Workflow_To_Customer_List();
 
 
         }
